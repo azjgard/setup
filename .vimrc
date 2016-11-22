@@ -32,6 +32,12 @@ call plug#begin('~/.vim/plugged')
   " Surround vim
   Plug 'tpope/vim-surround'
 
+  " SASS syntax highlighting
+  Plug 'cakebaker/scss-syntax.vim'
+
+  " Pug syntax highlighting
+  Plug 'digitaltoad/vim-pug'
+
 call plug#end()
 
 set tabstop=2
