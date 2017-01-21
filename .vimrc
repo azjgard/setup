@@ -1,110 +1,140 @@
-"""""""""""""""""""""""""""""""""
-" General
-"""""""""""""""""""""""""""""""""
-set nocompatible
-set modelines=0
-filetype plugin indent on
-
-"""""""""""""""""""""""""""""""""
-" Key Mappings
-"""""""""""""""""""""""""""""""""
-nnoremap ; :
-
-let mapleader = ","
-
-map <leader>n :NERDTreeToggle<CR>
-
-map <leader>. :vertical resize +5<Return>
-map <leader>, :vertical resize -5<Return>
-
-map <leader>t :bnext<Return>
-map <leader>T :bprevious<Return>
-map <leader>x :bd<Return>
-
-map <leader>= :Tabularize /=<Return>
-map <leader>: :Tabularize /:<Return>
-
-"let g:ycm_key_list_select_completion = ['<c-j>', '<Down>']
-"let g:ycm_key_list_previous = ['<c-k>', '<Down>']
-
-" Theme and UI
-"""""""""""""""""""""""""""""""""
 colorscheme atom-dark-256
-
-" installing qt 5 for this
-set guifont=Monoid\ Retina\ Nerd\ Font\ Complete\ Mono\ 12
 set cursorline
 
-set relativenumber number
-set visualbell
-set encoding=utf-8
+"" Basic remappings
+nnoremap ; :
+nnoremap <C-s> :w<cr>
 
-set wrap
-set textwidth=85
 set tabstop=2
-set shiftwidth=2
-set softtabstop=2
 set expandtab
-set noshiftround
-set showmatch
+set shiftwidth=2
 
-syntax on
+"automatically indent
+set smartindent
+set cindent
+
+"show line numbers
+set relativenumber
+
+"case insensitive search
+set ignorecase
+set smartcase
 
 set hidden
+set showmatch
 
-"""""""""""""""""""""""""""""""""
+" error bells
+set noerrorbells
+set visualbell
+set tm=500
+
+syntax on
+syntax enable
+
+filetype plugin indent on
+
+set cmdheight=1             " command bar height
+set title                   " set terminal title
+
+" //////////////////////////////// "
 " Plugins
-"""""""""""""""""""""""""""""""""
-call plug#begin('~/.vim/plugged')
+" //////////////////////////////// "
 
-"""""""""""""""""""""""
-"" GUI / UI Plugins
-"""""""""""""""""""""""
-  Plug 'vim-airline/vim-airline'
-  Plug 'vim-airline/vim-airline-themes'
-  let g:airline#extensions#tabline#enabled = 1
-  let g:airline#extensions#tabline#left_sep = ' '
-  let g:airline#extensions#tabline#left_alt_sep = '|'
-  let g:airline_powerline_fonts = 1
+call plug#begin('~/.local/share/nvim/plugged')
 
-  Plug 'scrooloose/nerdtree'
-  autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-  autocmd VimEnter * NERDTree
-  autocmd! VimEnter * NERDTree
-  let NERDTreeIgnore = ['Makefile', '\.o$']
+Plug 'ctrlpvim/ctrlp.vim'
 
-  Plug 'ryanoasis/vim-devicons'
-  Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+let g:airline_theme='papercolor'
+let g:airline#extensions#tabline#enabled = 1
 
-  " Syntax highlighting
-  Plug 'octol/vim-cpp-enhanced-highlight'
-  Plug 'jelera/vim-javascript-syntax'
+" I LOVE YU VIMuxk
+Plug 'benmills/vimux'
+let g:VimuxOrientation = "v"
 
-"""""""""""""""""""""""
-" Code Completion
-"""""""""""""""""""""""
-"  Plug 'Valloric/YouCompleteMe'
-  Plug 'rdnetto/YCM-Generator'
+Plug 'w0rp/ale'
+let g:ale_sign_column_always=1
+let g:ale_sign_error = '>>'
+let g:ale_sign_warning = '--'
 
-"""""""""""""""""""""""
-" Code Alignment
-"""""""""""""""""""""""
-  Plug 'godlygeek/tabular'
+Plug 'jiangmiao/auto-pairs'
 
-  
-"""""""""""""""""""""""
-" Code Snippets
-"""""""""""""""""""""""
-  Plug 'marcweber/vim-addon-mw-utils'
-  Plug 'tomtom/tlib_vim'
-  Plug 'garbas/vim-snipmate'
-  Plug 'honza/vim-snippets'
+Plug 'MarcWeber/vim-addon-mw-utils'
+Plug 'tomtom/tlib_vim'
+Plug 'garbas/vim-snipmate'
+Plug 'honza/vim-snippets'
 
-"""""""""""""""""""""""
-" Code Linting
-"""""""""""""""""""""""
-  Plug 'vim-syntastic/syntastic'
+" //////////////////////////////// "
+" Syntax
+" //////////////////////////////// "
+
+Plug 'cakebaker/scss-syntax.vim'
+Plug 'othree/html5.vim'
+Plug 'dNitro/vim-pug-complete'
+Plug 'digitaltoad/vim-pug'
+
+Plug 'jelera/vim-javascript-syntax'
+Plug 'octol/vim-cpp-enhanced-highlight'
+
+Plug 'plasticboy/vim-markdown'
+let g:vim_markdown_new_list_item_indent = 0
+
+Plug 'dkprice/vim-easygrep'
+Plug 'ap/vim-buftabline'
+
+Plug 'godlygeek/tabular'
+
+
 
 call plug#end()
 
-  
+" //////////////////////////////// "
+" Key Bindings
+" //////////////////////////////// "
+
+nnoremap <esc> :noh<return><esc>
+
+nnoremap j gj
+nnoremap k gk
+
+let mapleader=","
+
+" easily configure .vimrc
+nnoremap <leader>ev :edit ~/.vimrc<cr>
+nnoremap <leader>sv :source ~/.vimrc<cr>
+
+" session management
+nnoremap <leader>ss :source ~/.config/nvim/sessions/
+nnoremap <leader>sm :mks ~/.config/nvim/sessions/
+
+" aligning items
+nnoremap <leader>= :Tabularize /=<cr>
+nnoremap <leader>: :Tabularize /:<cr>
+nnoremap <leader>( :Tabularize /(<cr>
+
+" easily navigate between buffers
+nnoremap <leader>t :bnext<cr>
+nnoremap <leader>T :bprevious<cr>
+nnoremap <leader>x :bd<cr>
+
+" easily control splits
+nnoremap <leader>wv :vsplit<cr>
+nnoremap <leader>wh :split<cr>
+nnoremap <leader>wc :close<cr>
+
+" easily navigate between windows
+nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
+
+" plug stuff
+nnoremap <leader>pc :PlugClean<cr>
+nnoremap <leader>pi :PlugInstall<cr>
+
+" interact with tmux from vim
+nnoremap <leader>r :VimuxRunCommand("rm output; make; ./output")<cr>
+nnoremap <leader>R :VimuxRunCommand("./output")<cr>
+
+nnoremap s <C-w><C-w>
