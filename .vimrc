@@ -85,8 +85,6 @@ Plug 'ap/vim-buftabline'
 
 Plug 'godlygeek/tabular'
 
-
-
 call plug#end()
 
 " //////////////////////////////// "
@@ -138,3 +136,13 @@ nnoremap <leader>r :VimuxRunCommand("rm output; make; ./output")<cr>
 nnoremap <leader>R :VimuxRunCommand("./output")<cr>
 
 nnoremap s <C-w><C-w>
+
+
+
+
+
+
+
+
+
+:let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
