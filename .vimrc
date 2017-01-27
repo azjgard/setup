@@ -68,11 +68,11 @@ Plug 'honza/vim-snippets'
 " //////////////////////////////// "
 " Syntax
 " //////////////////////////////// "
-
 Plug 'cakebaker/scss-syntax.vim'
 Plug 'othree/html5.vim'
 Plug 'dNitro/vim-pug-complete'
 Plug 'digitaltoad/vim-pug'
+
 
 Plug 'jelera/vim-javascript-syntax'
 Plug 'octol/vim-cpp-enhanced-highlight'
@@ -136,13 +136,5 @@ nnoremap <leader>r :VimuxRunCommand("rm output; make; ./output")<cr>
 nnoremap <leader>R :VimuxRunCommand("./output")<cr>
 
 nnoremap s <C-w><C-w>
-
-
-
-
-
-
-
-
 
 :let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
