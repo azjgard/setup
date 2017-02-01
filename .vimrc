@@ -14,7 +14,7 @@ set smartindent
 set cindent
 
 "show line numbers
-set relativenumber
+set relativenumber number
 
 "case insensitive search
 set ignorecase
@@ -65,14 +65,16 @@ Plug 'tomtom/tlib_vim'
 Plug 'garbas/vim-snipmate'
 Plug 'honza/vim-snippets'
 
+Plug 'scrooloose/nerdcommenter'
+
 " //////////////////////////////// "
 " Syntax
 " //////////////////////////////// "
+
 Plug 'cakebaker/scss-syntax.vim'
 Plug 'othree/html5.vim'
 Plug 'dNitro/vim-pug-complete'
 Plug 'digitaltoad/vim-pug'
-
 
 Plug 'jelera/vim-javascript-syntax'
 Plug 'octol/vim-cpp-enhanced-highlight'
@@ -84,6 +86,39 @@ Plug 'dkprice/vim-easygrep'
 Plug 'ap/vim-buftabline'
 
 Plug 'godlygeek/tabular'
+Plug 'easymotion/vim-easymotion'
+
+Plug 'lambdatoast/elm.vim'
+
+
+Plug 'othree/jspc.vim'
+Plug 'ternjs/tern_for_vim', { 'do': 'npm install' }
+Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' }
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+let g:deoplete#enable_at_startup = 1
+if !exists('g:deoplete#omni#input_patterns')
+  let g:deoplete#omni#input_patterns = {}
+endif
+
+" let g:deoplete#disable_auto_complete = 1
+autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
+
+" omnifuncs
+augroup omnifuncs
+  autocmd!
+  autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+  autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+  autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+  autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+  autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+augroup end
+
+" tern
+if exists('g:plugs["tern_for_vim"]')
+  let g:tern_show_argument_hints = 'on_hold'
+  let g:tern_show_signature_in_pum = 1
+  autocmd FileType javascript setlocal omnifunc=tern#Complete
+endif
 
 call plug#end()
 
@@ -132,9 +167,21 @@ nnoremap <leader>pc :PlugClean<cr>
 nnoremap <leader>pi :PlugInstall<cr>
 
 " interact with tmux from vim
-nnoremap <leader>r :VimuxRunCommand("rm output; make; ./output")<cr>
+nnoremap <leader>r :VimuxRunCommand("clear; node app.js")<cr>
 nnoremap <leader>R :VimuxRunCommand("./output")<cr>
+nnoremap <leader>q :VimuxPromptCommand<cr>
 
 nnoremap s <C-w><C-w>
 
 :let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
+
+
+highlight OverLength ctermbg=red ctermfg=white guibg=#592929
+match OverLength /\%81v.\+/
+
+" Store temporary files in a central spot
+let vimtmp = $HOME . '/.vimtmp/' . getpid()
+silent! call mkdir(vimtmp, "p", 0700)
+let &backupdir=vimtmp
+let &directory=vimtmp
+
