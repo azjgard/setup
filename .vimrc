@@ -120,6 +120,8 @@ if exists('g:plugs["tern_for_vim"]')
   autocmd FileType javascript setlocal omnifunc=tern#Complete
 endif
 
+Plug 'qpkorr/vim-bufkill'
+
 call plug#end()
 
 " //////////////////////////////// "
@@ -149,7 +151,8 @@ nnoremap <leader>( :Tabularize /(<cr>
 " easily navigate between buffers
 nnoremap <leader>t :bnext<cr>
 nnoremap <leader>T :bprevious<cr>
-nnoremap <leader>x :bd<cr>
+nnoremap <leader>x :BD<cr>
+nnoremap <leader>X :bd<cr>
 
 " easily control splits
 nnoremap <leader>wv :vsplit<cr>
