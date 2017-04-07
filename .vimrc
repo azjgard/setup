@@ -3,7 +3,7 @@ colorscheme atom-dark-256
 "show line numbers
 set nu rnu
 set numberwidth=3
-set cursorline
+" set cursorline
 " }}}
 "
 " General Settings {{{
@@ -39,6 +39,7 @@ set title                   " set terminal title
 " Plugins {{{
 call plug#begin('~/.local/share/nvim/plugged')
 
+Plug 'flazz/vim-colorschemes'
 Plug 'ctrlpvim/ctrlp.vim'
 
 Plug 'vim-airline/vim-airline'
@@ -68,6 +69,7 @@ Plug 'cakebaker/scss-syntax.vim'
 Plug 'othree/html5.vim'
 Plug 'dNitro/vim-pug-complete'
 Plug 'digitaltoad/vim-pug'
+Plug 'hail2u/vim-css3-syntax'
 
 
 Plug 'jelera/vim-javascript-syntax'
@@ -83,6 +85,7 @@ Plug 'ap/vim-buftabline'
 Plug 'godlygeek/tabular'
 Plug 'tpope/vim-surround'
 Plug 'scrooloose/nerdtree'
+:let g:NERDTreeIgnore=['^node_modules$', '*.o']
 
 Plug 'qpkorr/vim-bufkill'
 
@@ -93,6 +96,11 @@ Plug 'mileszs/ack.vim'
 Plug 'inside/vim-grep-operator'
 
 Plug 'nathanaelkane/vim-indent-guides'
+
+Plug 'vim-scripts/h2cppx'
+
+Plug 'ryanoasis/vim-devicons'
+Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 
 call plug#end()
 " }}}
@@ -107,8 +115,12 @@ autocmd BufRead,BufNewFile *.md,*.txt setlocal wrap
 autocmd BufRead,BufNewFile *.md,*.txt setlocal spell spelllang=en_us
 
 " TODO FIXME: implement vimux autocmds for javascript files vs. cpp files
-nnoremap <leader>r :VimuxRunCommand("clear; rm pathfinder; make; ./pathfinder")<cr>
+nnoremap <leader>r :VimuxRunCommand("clear; rm main; make; ./main")<cr>
 nnoremap <leader>R :nnoremap <leader>r :VimuxRunCommand("
+
+nnoremap <F3> :!make<cr><cr>:!./main<cr>
+
+autocmd BufRead,BufNewFile *.css,*.scss nnoremap <leader>o vi{:sort<cr>vi{:Tabularize /:<cr>
 
 " highlight OverLength ctermbg=red ctermfg=white guibg=#592929
 " match OverLength /\%81v.\+/
@@ -166,6 +178,8 @@ nnoremap <esc> :noh<return><esc>
 nnoremap j gj
 nnoremap k gk
 
+nnoremap s <C-w><C-w>
+
 let mapleader=","
 let maplocalleader="\\"
 
@@ -212,11 +226,11 @@ nnoremap <leader>sv :source ~/.vimrc<cr>
 
 " --- Vimux ---
 " Send commands to tmux from inside of vim.
-nnoremap <leader>r :VimuxRunCommand("clear; rm bst; make; ./bst")<cr>
+nnoremap <leader>r :VimuxRunCommand("clear; rm main; make; ./main")<cr>
 nnoremap <leader>R :nnoremap <leader>r :VimuxRunCommand("
 nnoremap <leader>q :VimuxPromptCommand<cr>
 
-" Open the current file in the browser.
+" Open the current file in the browser in the background.
 nnoremap <leader>b :!firefox % &<cr><cr>
 " }}}
 
