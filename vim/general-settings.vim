@@ -9,6 +9,10 @@ filetype plugin indent on
 
 set lazyredraw "only redraw when necessary
 
+"swapfiles are annoying and I save so frequently
+"that I don't need them
+set noswapfile 
+
 "NVIM only; change block to line in insert mode
 let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
 
@@ -17,8 +21,8 @@ colorscheme atom-dark-256
 "highlight current line
 set cursorline 
 
-"highlight column 80
-hi ColorColumn ctermbg=blue 
+"column 80 needs color to give us an overflow indicator
+set colorcolumn=80
 
 set number "current line # is absolute
 set relativenumber "non-current lines are relative
@@ -45,3 +49,19 @@ set hlsearch
 set noerrorbells
 set visualbell
 set tm=500
+
+" -------------------- "
+" Highlight groups "
+" -------------------- "
+
+"color column
+hi ColorColumn ctermbg=white
+hi BufTabLineCurrent ctermfg=40 ctermbg=237
+
+"ALE linter
+hi ALEErrorSign ctermfg=124 ctermbg=237
+hi ALEWarningSign ctermfg=220 ctermbg=237
+
+"line number
+hi CursorLineNR ctermfg=40 ctermbg=237
+
