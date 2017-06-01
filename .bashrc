@@ -118,16 +118,36 @@ if ! shopt -oq posix; then
   fi
 fi
 
-LS_COLORS='*.html=32:*.js=93:*.css=91:*.json=33:di=1;4:*.jpg=93:*.png=91:*.odt=34:*.md=36:*.php=34:*.docx=34:*.tar=94:*.gz=94:*.mp3=96:*.mp4=96:*.sql=94:*.zip=94:*.cpp=94:*.h=95:*.txt=97:*.o=90'
+LS_COLORS='*.html=32:*.js=93:*.css=91:*.json=33:di=1;4:*.jpg=93:*.png=91:*.odt=34:*.md=36:*.php=34:*.docx=34:*.tar=94:*.gz=94:*.mp3=96:*.mp4=96:*.sql=94:*.zip=94:*.cpp=94:*.h=95:*.txt=97:*.o=90:*.jade=32'
 export LS_COLORS
 
 alias ls='ls --color=auto --sort=extension --group-directories-first'
 alias lsc='clear; ls -1'
-alias sb='source ~/.bashrc'
-alias eb='vi ~/.bashrc'
+alias sv='source ~/.bashrc'
+alias ev='vi ~/.bashrc'
 
+alias vscode='~/VSCode-linux-x64/code &'
 
+alias treenode='tree -I "node_modules"'
 
+# git
+function gitCommit() {
+  git commit -m "$1"
+  git status
+}
+function gitAdd() {
+  git add "$1"
+  git status
+}
+function gitReset() {
+  git reset
+  git status
+}
 
-# Yavide alias
-alias yavide="gvim --servername yavide -f -N -u /opt/yavide/.vimrc"
+alias gs='git status'
+alias gl='git log'
+alias gc='gitCommit'
+alias ga='gitAdd'
+alias gr='gitReset'
+
+PATH=$PATH:~/bin/TEE-CLC-14.118.0/
