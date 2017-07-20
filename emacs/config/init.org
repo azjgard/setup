@@ -1,0 +1,152 @@
+* Jordin's Emacs Config
+** Package Management
+   MELPA needs to be added as a source to pull packages from.
+   It will have pretty much anything that is worth downloading
+   for Emacs.
+   
+   #+BEGIN_SRC emacs-lisp
+     (require 'package)
+     (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
+   #+END_SRC
+   
+** General Settings
+*** Navigation
+    This provides some nice altTab-ish functionality for
+    jumping back and forth between two buffers that are
+    open.
+    
+    #+BEGIN_SRC emacs-lisp
+      (global-set-key (kbd "C-SPC") 'mode-line-other-buffer) 
+    #+END_SRC
+
+*** Evil Mode
+    Honestly, this is the number one thing that makes Emacs an
+    attractive option for me. Learning Vim was a pivotal moment in my programming
+    career, and it was incredibly hard to try to move away from it. Evil Mode
+    gives me the best of both worlds by giving me everything I love about Vim
+    inside of Emacs.
+    
+    #+BEGIN_SRC emacs-lisp
+     (use-package evil
+       :init
+       (setq evil-shift-width 2)
+       (setq evil-want-C-u-scroll t)
+       :ensure t
+       :config
+       (evil-define-key 'normal evil-motion-state-map (kbd "gc") 'comment-or-uncomment-region)
+       (evil-define-key 'normal evil-motion-state-map (kbd "<tab>") 'indent-for-tab-command)
+       (evil-define-key 'normal neotree-mode-map (kbd "TAB") 'neotree-enter)
+       (evil-define-key 'normal neotree-mode-map (kbd "SPC") 'neotree-quick-look)
+       (evil-define-key 'normal neotree-mode-map (kbd "q") 'neotree-hide)
+       (evil-define-key 'normal neotree-mode-map (kbd "RET") 'neotree-enter)
+       (evil-mode 1))
+    #+END_SRC
+
+*** Ido Mode
+    Ido mode makes so many commands so much easier to deal with. Vertical mode
+    makes its output easier to read and flex-matching adds fuzzy functionality
+    to the files/commands you select.
+    
+    #+BEGIN_SRC emacs-lisp
+     (ido-mode)
+     (ido-vertical-mode)
+     (setq ido-enable-flex-matching t)
+    #+END_SRC
+
+*** Snippets
+    Snippets are sooooo helpful in speeding up your programming workflow,
+    especially when the language you're writing has a super verbose syntax
+    (*cough* Java *cough* C#).
+
+    #+BEGIN_SRC emacs-lisp
+      (require 'yasnippet)
+      (yas-global-mode 1)
+    #+END_SRC
+    
+    These two tweaks are useful for separate reasons. First of all, we need to
+    make sure that Emacs is able to load the directory where our snippets live
+    in. 
+
+    Second of all, we want to make sure that when we're using a shell,
+    snippets are disabled. If we don't do this, tab-completion in the terminal
+    is going to be really messy.
+    
+    #+BEGIN_SRC emacs-lisp
+      (add-to-list 'load-path (expand-file-name "snippets"))
+      (add-hook 'term-mode-hook (lambda() (yas-minor-mode -1)))
+    #+END_SRC
+
+*** Misc
+    I don't want to see the dumb splash screen everytime
+    I start Emacs. Instead, just open the *scratch* buffer.
+
+    #+BEGIN_SRC emacs-lisp
+      (setq inhibit-startup-screen t)
+      (setq initial-buffer-choice t)
+    #+END_SRC
+
+** User Interface & Appearance
+   I like to start Emacs maximized and remove the GUI elements that just
+   take up screen space, such as the menu bar, the tool bar, and the scroll
+   bars.
+
+   #+BEGIN_SRC emacs-lisp
+     (toggle-frame-maximized)
+     (scroll-bar-mode -1)
+     (menu-bar-mode -1)
+     (tool-bar-mode -1)
+   #+END_SRC
+   
+   Dark themes are easier on the eyes, especially when coding in the dark.
+
+   #+BEGIN_SRC emacs-lisp
+     (load-theme 'wombat)
+   #+END_SRC
+   
+   Relative line numbers improve the Evil Mode experience by 1000x. The other
+   two variables determine the symbol on the current line (which, if "",
+   shows the absolute line number) and the format of the numbers themselves.
+
+   #+BEGIN_SRC emacs-lisp
+     (linum-relative-global-mode)
+     (setq linum-relative-format "%3s |")
+     (setq linum-relative-current-symbol "")
+   #+END_SRC
+   
+   Best programming font ever!
+   #+BEGIN_SRC emacs-lisp
+     (add-to-list 'default-frame-alist '(font . "DroidSansMonoForPowerline Nerd Font Book" ))
+     (set-face-attribute 'default t :font "DroidSansMonoForPowerline Nerd Font Book"  )
+   #+END_SRC
+
+   It's nice to see when parenthesis are matching.
+    
+   #+begin_src emacs-lisp :tangle yes
+      (show-paren-mode)
+   #+end_src
+   
+** Org Mode
+   It's really hard to read source blocks inside of org unless they are properly
+   syntax highlighted.
+   
+   #+BEGIN_SRC emacs-lisp
+     (setq org-src-fontify-natively t)
+   #+END_SRC
+   
+   It's annoying when lines run too long in Org, so we need
+   to automatically wrap them and set a decent column to wrap at. 80 columns
+   works pretty well for my typical monitor size.
+   
+   #+BEGIN_SRC emacs-lisp
+     (add-hook 'org-mode-hook 'auto-fill-mode)
+     (add-hook 'org-mode-hook '(lambda() "" (set-fill-column 80)))
+   #+END_SRC
+   
+   I love the look that this theme gives to org. When you enable it and add the
+   indentation, it's *perfect*.
+
+   #+begin_src emacs-lisp :tangle yes
+     (load-theme 'org-beautify t)
+     (add-hook 'org-mode-hook 'org-indent-mode)
+   #+end_src
+
