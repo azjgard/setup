@@ -150,3 +150,14 @@
      (add-hook 'org-mode-hook 'org-indent-mode)
    #+end_src
 
+** Web Development
+*** JavaScript
+    JS2 mode is pretty cool because it has built-in linting functionality. It has a
+    ton of other cool features too, and I probably don't use it anywhere near its
+    full capacity.
+
+    #+begin_src emacs-lisp :tangle yes
+      (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
+      (add-hook 'js2-mode-hook '(lambda() (setq js2-basic-offset 2))
+    #+end_src
+
