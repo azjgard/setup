@@ -1,0 +1,86 @@
+* Coversheets – Requested Changes 11.18.16
+
+** Miscellaneous
+*** DONE Mobile-responsive front-page
+- The login page is currently cut off on mobile devices, almost unusable. Let's make it better!
+- Note taken on [2017-07-10 Mon 19:35] \\
+  The login form will now adjust its size relative to the screen size
+  of the user that is trying to login.
+**** TODO Merge with master
+**** TODO Push to production
+
+** Pictures
+*** TODO Go to select a few to email out of the album
+    - What does this mean exactly?
+      
+*** TODO Search is not detailed enough – cannot find job / folder
+    Example Jennifer Garcia
+
+*** TODO Need Time/Date stamp albums 
+    - This would be pretty easy with a new field
+
+*** DONE Need Name of employee that uploaded the album 
+  - This would be pretty easy with a new field
+  - Note taken on [2017-07-10 Mon 19:46] \\
+    Added a created_by field that will automatically be populated
+    with the user that creates the album.
+
+**** TODO Functionality handling tables in current production database?
+**** TODO Merge with master
+**** TODO Push to production
+
+*** TODO Need drop down of “type” of album
+- Emergency
+- Inspection
+- Recon
+- Progress
+- Completion
+    - This would be pretty easy with a new field
+*** TODO Need more convenient way to pull out of coversheet
+    - What does this mean exactly?
+*** TODO Keep description box
+    - What does this mean exactly?
+** Reports 
+*** TODO Glitch – have to get out of section and back into reports to run a 2nd report
+    - Need to come up with repro steps for this
+
+*** TODO Weekly production list example
+    - What does this mean exactly?
+
+*** TODO Ability to choose a specific Group By & Sort By type 
+    Ex. How many CSAA jobs did we get from DKI last year?
+
+*** TODO Need to sort by 2nd loss type with sub-total
+    Ex. How many Fires did we get from Alacrity over the last 6 months?
+
+*** TODO Add % complete to date & estimated completion date to coversheet for use in weekly reports
+    - How does the % get tracked? Is it automatic or manually entered?
+    - Is the estimated completion date automatic or manually entered?
+
+*** TODO Need a De-activate Adjusters feature
+*** TODO De-active employees removes their access from the system, but also removes their name from all jobs they worked on.. 
+*** TODO Item Added – use Esc key on the keyboard to go back to the previous screen when browsing coversheets
+** On the Coversheets page, where the jobs are listed:
+*** TODO Add “last 30 days” as a drop down choice in the “Entry Date” section.
+*** TODO Auto-Hide the jobs that are in “Declined” status. With the ability to “show declined jobs” which would normally be hidden in the list.
+*** TODO Add the “% complete” as a column on the list. Can replace “State” ?
+*** TODO He would like to re-arrange the “Add Job” screen as well. In this order:
+- Customer info at the top
+- Loss Location
+- Insurance
+- Contact
+- Call Data
+- Assignments
+- Last Update
+- Created by
+- Albums
+*** TODO Erick would like the new coversheets to automatically be put to the “new “ status when entered.
+Then after saved, you would be able to go back in and assign an estimator and change the status.
+** Contact requirements
+*** TODO Remove the requirement to enter a primary phone number in the Contact section. And remove the requirement to check the “Same as loss address” box
+And he would like this “Production Snapshot” report easily accessible. This would include:
+  - Customer 
+  - Value 
+  - % complete 
+And this is sorted by Super.
+
