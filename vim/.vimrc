@@ -15,12 +15,28 @@
 " However, there are a couple of things that I NEED to migrate from my
 " current VS Code setup to get everything up to speed:
 "
-" - [  ] A nice file browser to see folder structure (especially for trying
+" - [X] A nice file browser to see folder structure (especially for trying
 "   to resolve paths to components, etc.). customizing NERDTree.
-" - [  ] Emmett for writing JSX quickly
-" - [  ] Auto-formatting JavaScript and JSX on save (Prettier or Beautify)
+"       Resolution: Added icons and coloring to NERDTree, which results
+"       in a much more clean file browsing experience that I'm perfectly
+"       happy with.
+"
+" - [X] JSX syntax highlighting
+" - [X] Emmett for writing JSX quickly
+"       Resolution: JavaScript highlighting I already had, and it just took
+"       one extra plugin to get correct syntax for the JSX. I had to add
+"       a setting to make sure that the plugin would also highlight
+"       JSX in .js extensions, not just .jsx. Emmett is working
+"       like a charm as well for writing JSX, although I have to
+"       remember to hit , after pressing the leader key for expanding
+"       the Emmett snippet.
+"
+" - [X] Auto-formatting JavaScript and JSX on save (Prettier or Beautify)
+"       Resolution: Prettier is looking good, just need to remember
+"       to add // @format to the tops of the files. In VS Code, I was
+"       actually using Beautify instead of Prettier.
+"
 " - [  ] Asynchronous ESLint linting
-
 
 
 "  =============================
@@ -46,7 +62,6 @@ inoremap <expr> <C-k> pumvisible() ? "\<C-p>" : "\<C-k>"
 nmap <silent><esc> :nohlsearch<cr>
 
 
-
 "  =============================
 "  ----- General Settings ------
 "  =============================
@@ -58,7 +73,7 @@ syntax on
 syntax enable
 filetype plugin indent on
 
-set lazyredraw
+" set lazyredraw
 
 "swapfiles are annoying and I save so frequently
 "that I don't need them
@@ -73,25 +88,24 @@ set cursorline
 "column 80 needs color to give us an overflow indicator
 set colorcolumn=80
 
-set number "current line # is absolute
-set relativenumber "non-current lines are relative
-set numberwidth=3 "small line number column
+set number 
+set relativenumber 
+set numberwidth=3
 
-set tabstop=2 "tab width of 2
-set shiftwidth=2 ">> command width of 2
-set expandtab "tabs -> spaces
+set tabstop=2 
+set shiftwidth=2
+set expandtab
 
-"automatically indent code
 set smartindent
 set cindent
 
-set ignorecase "case-insensitive by default
-set smartcase "case-sensitive if capital letters in search
+set ignorecase 
+set smartcase 
 
-set hidden "allow hidden buffers
+set hidden
 
-set showmatch "highlight search matches
-set incsearch "highlight search matches incrementally as you type
+set showmatch
+set incsearch
 set hlsearch
 
 "disable annoying error sounds
@@ -170,13 +184,13 @@ call plug#begin('~/setup/vim/plugged')
 " Syntax enhancement and visual alterations 
 
     " Vimux
-    Plug 'benmills/vimux'
+    " Plug 'benmills/vimux'
 
     " Vue
-    Plug 'posva/vim-vue'
+    " Plug 'posva/vim-vue'
 
     " Pug
-    Plug 'digitaltoad/vim-pug'
+    " Plug 'digitaltoad/vim-pug'
 
     " CSS
     Plug 'cakebaker/scss-syntax.vim'
@@ -189,61 +203,79 @@ call plug#begin('~/setup/vim/plugged')
     Plug 'Valloric/MatchTagAlways' "show matching HTML tags
 
     " Javascript
-    " Plug 'jelera/vim-javascript-syntax'
     Plug 'pangloss/vim-javascript'
     Plug 'mxw/vim-jsx'
+    let g:jsx_ext_required = 0
 
     " C++
-    Plug 'octol/vim-cpp-enhanced-highlight'
+    " Plug 'octol/vim-cpp-enhanced-highlight'
 
     " Markdown
-    Plug 'plasticboy/vim-markdown'
-    let g:vim_markdown_new_list_item_indent = 0
-    let g:vim_markdown_folding_disabled = 1
+    " Plug 'plasticboy/vim-markdown'
+    " let g:vim_markdown_new_list_item_indent = 0
+    " let g:vim_markdown_folding_disabled = 1
 
-    Plug 'Yggdroot/indentLine' "show indentation symbols
-    let g:indentLine_color_term = 239
-    let g:indentLine_char = '¦'
+    " Plug 'Yggdroot/indentLine' "show indentation symbols
+    " let g:indentLine_color_term = 239
+    " let g:indentLine_char = '¦'
 
-    Plug 'ap/vim-buftabline' "show open buffers on tabline
-    hi BufTabLineCurrent ctermfg=blue
+    " Plug 'ap/vim-buftabline' "show open buffers on tabline
+    " hi BufTabLineCurrent ctermfg=blue
 
 
 " Functionality extensions
-    " Plug 'w0rp/ale' "asynchronous linting (thanks neovim)
-    " let g:ale_sign_column_always=1
-    " let g:ale_sign_error = '>>'
-    " let g:ale_sign_warning = '-|'
+    Plug 'w0rp/ale' "asynchronous linting (thanks neovim)
+    let g:ale_sign_column_always=1
+    let g:ale_sign_error = '>>'
+    let g:ale_sign_warning = '-|'
+    let g:ale_linters = {
+          \'javascript': ['eslint'],
+          \'javascript.jsx': ['eslint']
+          \}
 
     Plug 'godlygeek/tabular' "line stuff up
 
-    "kill buffer without killing window using :BD
+    " "kill buffer without killing window using :BD
     Plug 'qpkorr/vim-bufkill' 
 
     Plug 'eapache/auto-pairs' "auto-close pairs
 
-    "intellisense
-    " Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-    " let g:deoplete#enable_at_startup=1
-    " let g:deoplete#enable_smart_case=1
-
     Plug 'tpope/vim-commentary' "quick commenting
 
-    " Plug 'roxma/nvim-completion-manager'
 
-    "snippets
+    " "snippets
     Plug 'MarcWeber/vim-addon-mw-utils'
     Plug 'tomtom/tlib_vim'
     Plug 'garbas/vim-snipmate'
     Plug 'honza/vim-snippets'
 
 
-    Plug 'JamshedVesuna/vim-markdown-preview'
+    " Plug 'JamshedVesuna/vim-markdown-preview'
 
     Plug 'scrooloose/nerdtree'
     map <C-n> :NERDTreeToggle<CR>
 
+    Plug 'ryanoasis/vim-devicons'
+    let g:WebDevIconsUnicodeDecorateFolderNodes = 1
+    let g:DevIconsEnableFoldersOpenClose = 1
+
+    Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+
+    " Not worth the performance hit
+    " Plug 'mattn/emmet-vim'
+    " let g:user_emmet_leader_key='<C-m>'
+    " let g:user_emmet_settings = {
+    "   \  'javascript.jsx' : {
+    "     \      'extends' : 'jsx',
+    "     \  },
+    "   \}
+
+    Plug 'prettier/vim-prettier', { 'do': 'npm install' }
+    let g:prettier#autoformat = 0 " performance suffers without this
+    let g:prettier#exec_cmd_async = 1
+    nnoremap <leader>p :PrettierAsync<cr>
+
 call plug#end()
 
-nnoremap <C-]> :cprevious<cr>
-nnoremap <C-[> :cnext<cr>
+" nnoremap <C-]> :cprevious<cr>
+" nnoremap <C-[> :cnext<cr>
