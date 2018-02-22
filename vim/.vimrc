@@ -1,281 +1,128 @@
-"  =============================
-"  ---- Table of Contents ------
-"  =============================
-"  General Mappings - @gmappings
-"  Leader Mappings - @lmappings
-"  General Settings - @gsettings
-"  Plugins - @plugins
-"  =============================
-"
-"
-" WISHLIST:
-" I've been using VS Code for awhile since I've mostly been working
-" with codebases that I'm not familiar with. Honestly, while I love VS
-" Code (with vim keybindings of course), I miss the native Vim experience.
-" However, there are a couple of things that I NEED to migrate from my
-" current VS Code setup to get everything up to speed:
-"
-" - [X] A nice file browser to see folder structure (especially for trying
-"   to resolve paths to components, etc.). customizing NERDTree.
-"       Resolution: Added icons and coloring to NERDTree, which results
-"       in a much more clean file browsing experience that I'm perfectly
-"       happy with.
-"
-" - [X] JSX syntax highlighting
-" - [X] Emmett for writing JSX quickly
-"       Resolution: JavaScript highlighting I already had, and it just took
-"       one extra plugin to get correct syntax for the JSX. I had to add
-"       a setting to make sure that the plugin would also highlight
-"       JSX in .js extensions, not just .jsx. Emmett is working
-"       like a charm as well for writing JSX, although I have to
-"       remember to hit , after pressing the leader key for expanding
-"       the Emmett snippet.
-"
-" - [X] Auto-formatting JavaScript and JSX on save (Prettier or Beautify)
-"       Resolution: Prettier is looking good, just need to remember
-"       to add // @format to the tops of the files. In VS Code, I was
-"       actually using Beautify instead of Prettier.
-"
-" - [  ] Asynchronous ESLint linting
+call plug#begin('~/.local/share/nvim/plugged')
+
+" Functionality
+Plug 'prettier/vim-prettier', { 'do': 'npm install' }
+Plug 'tpope/vim-commentary'
+Plug 'jiangmiao/auto-pairs'
+Plug 'w0rp/ale'
+Plug 'MarcWeber/vim-addon-mw-utils'
+Plug 'tomtom/tlib_vim'
+Plug 'garbas/vim-snipmate'
+Plug 'honza/vim-snippets'
+Plug 'godlygeek/tabular'
+let g:AutoPairsMultilineClose = 0
+" let g:prettier#autoformat = 0
+" autocmd BufWritePre *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.json,*.graphql,*.md,*.vue PrettierAsync
 
 
-"  =============================
-"  ----- General Mappings  -----
-"  =============================
-"  @gmappings
+" Syntax
+Plug 'pangloss/vim-javascript'
+Plug 'digitaltoad/vim-pug'
 
-" Quick save with Ctrl+S
-nnoremap <C-s> :w<cr>
+" File Navigation / Management
+Plug 'scrooloose/nerdtree'
+Plug 'qpkorr/vim-bufkill'
+Plug 'ap/vim-buftabline'
+Plug 'kien/ctrlp.vim'
+nnoremap <C-n> :NERDTreeToggle<CR>
 
-" Move vertically by visual line
-nnoremap j gj
-nnoremap k gk
+" Aesthetics
+Plug 'joshdick/onedark.vim'
+Plug 'ryanoasis/vim-devicons'
+Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+let g:webdevicons_enable_ctrlp = 1
+let g:webdevicons_conceal_nerdtree_brackets = 1
+let g:WebDevIconsUnicodeDecorateFolderNodes = 1
+let g:DevIconsEnableFoldersOpenClose = 1
+let g:WebDevIconsNerdTreeAfterGlyphPadding = ' '
 
-" Move lines up and down
-nnoremap _ ddkP
-nnoremap - ddp
+call plug#end()
 
-" Ctrl + J and Ctrl + K will navigate the deoplete menu
-inoremap <expr> <C-j> pumvisible() ? "\<C-n>" : "\<C-j>"
-inoremap <expr> <C-k> pumvisible() ? "\<C-p>" : "\<C-k>"
-
-nmap <silent><esc> :nohlsearch<cr>
-
-
-"  =============================
-"  ----- General Settings ------
-"  =============================
-"  @gsettings
-
-colorscheme atom-dark-256
-
+colorscheme onedark
 syntax on
-syntax enable
-filetype plugin indent on
-
-" set lazyredraw
-
-"swapfiles are annoying and I save so frequently
-"that I don't need them
-set noswapfile 
-
-"NVIM only; change block to line in insert mode
-let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
-
-"highlight current line
-set cursorline 
-
-"column 80 needs color to give us an overflow indicator
-set colorcolumn=80
-
-set number 
-set relativenumber 
-set numberwidth=3
 
 set tabstop=2 
 set shiftwidth=2
 set expandtab
 
-set smartindent
-set cindent
+set autochdir
 
-set ignorecase 
-set smartcase 
+set noswapfile
 
-set hidden
+set cursorline
 
-set showmatch
-set incsearch
-set hlsearch
-
-"disable annoying error sounds
 set noerrorbells
 set visualbell
 set tm=500
 
-" -------------------- "
-" Highlight groups "
-" -------------------- "
+set ignorecase
+set smartcase
 
-"color column
-hi ColorColumn ctermbg=white
-hi BufTabLineCurrent ctermfg=40 ctermbg=237
+set hidden
 
-"ALE linter
-hi ALEErrorSign ctermfg=124 ctermbg=237
-hi ALEWarningSign ctermfg=220 ctermbg=237
+set number relativenumber
+set numberwidth=4
 
-"line number
-hi CursorLineNR ctermfg=40 ctermbg=237
-
-hi! Note ctermfg=darkyellow
-match Note /NOTE:/
-
-
-"  =============================
-"  ------ Leader Mappings ------
-"  =============================
-"  @lmappings
+set colorcolumn=80
+hi ColorColumn ctermbg=gray
 
 let mapleader=","
 
-"quick navigate open buffers
-nnoremap <leader>t :bnext<cr>
-nnoremap <leader>T :bprevious<cr>
+nmap <esc> :nohlsearch<cr>
 
-"sudo save
-nnoremap <leader>ss :w !sudo tee %<cr><cr>
+nnoremap <C-p> :FuzzyOpen<CR>
+nnoremap gf :vertical wincmd f<CR>
 
-"quick source .vimrc file
-nnoremap <leader>sv :source ~/.vimrc<cr>
+nnoremap <C-s> :w<cr>
+nnoremap <leader>s :source ~/.vimrc<cr>
 
-"quick install packages
+nnoremap <leader>pc :PlugClean<cr>
 nnoremap <leader>pi :PlugInstall<cr>
 
-"quick split management
-nnoremap <leader>wv :vsplit<cr>
-nnoremap <leader>ws :split<cr>
 nnoremap <leader>wc :close<cr>
+nnoremap <leader>wh :split<cr>
+nnoremap <leader>wv :vsplit<cr>
 
-"quick alignment
-nnoremap <leader>= :Tabularize /^[^=]*\zs=<cr>
-nnoremap <leader>: :Tabularize /:<cr>
-nnoremap <leader><leader> :Tabularize /
+nnoremap <C-k> :bnext<cr>
+nnoremap <C-j> :bprev<cr>
 
-"close buffer without closing window
 nnoremap <leader>x :BD<cr>
-"force above command
-nnoremap <leader>X :BD!<cr> 
+nnoremap <leader>X :BD!<cr>
 
-"open current file in firefox
-nnoremap <leader>b !firefox % &<cr><cr>
+imap <leader>; <esc>A;<esc>
+nnoremap <leader>; <esc>A;<esc>
 
-nnoremap <leader>n :VimuxPromptCommand<cr>
-nnoremap <leader>l :VimuxRunLastCommand<cr>
+nnoremap <leader>= :Tabularize /=<cr>
 
+let g:currentmode={
+      \ 'n'  : 'Normal ',
+      \ 'no' : 'N·Operator Pending ',
+      \ 'v'  : 'Visual ',
+      \ 'V'  : 'V·Line ',
+      \ 'x22' : 'V·Block ',
+      \ 's'  : 'Select ',
+      \ 'S'  : 'S·Line ',
+      \ 'x19' : 'S·Block ',
+      \ 'i'  : 'Insert ',
+      \ 'R'  : 'R ',
+      \ 'Rv' : 'V·Replace ',
+      \ 'c'  : 'Command ',
+      \ 'cv' : 'Vim Ex ',
+      \ 'ce' : 'Ex ',
+      \ 'r'  : 'Prompt ',
+      \ 'rm' : 'More ',
+      \ 'r?' : 'Confirm ',
+      \ '!'  : 'Shell ',
+      \ 't'  : 'Terminal '
+      \}
 
-
-"  =============================
-"  --------- Plugins ----------- 
-"  =============================
-"  @plugins
-
-call plug#begin('~/setup/vim/plugged')
-" Syntax enhancement and visual alterations 
-
-    " Vimux
-    " Plug 'benmills/vimux'
-
-    " Vue
-    " Plug 'posva/vim-vue'
-
-    " Pug
-    " Plug 'digitaltoad/vim-pug'
-
-    " CSS
-    Plug 'cakebaker/scss-syntax.vim'
-    Plug 'hail2u/vim-css3-syntax'
-    Plug 'ap/vim-css-color' "preview hex colors in CSS files
-
-    " HTML
-    Plug 'othree/html5.vim'
-    Plug 'dNitro/vim-pug-complete'
-    Plug 'Valloric/MatchTagAlways' "show matching HTML tags
-
-    " Javascript
-    Plug 'pangloss/vim-javascript'
-    Plug 'mxw/vim-jsx'
-    let g:jsx_ext_required = 0
-
-    " C++
-    " Plug 'octol/vim-cpp-enhanced-highlight'
-
-    " Markdown
-    " Plug 'plasticboy/vim-markdown'
-    " let g:vim_markdown_new_list_item_indent = 0
-    " let g:vim_markdown_folding_disabled = 1
-
-    " Plug 'Yggdroot/indentLine' "show indentation symbols
-    " let g:indentLine_color_term = 239
-    " let g:indentLine_char = '¦'
-
-    " Plug 'ap/vim-buftabline' "show open buffers on tabline
-    " hi BufTabLineCurrent ctermfg=blue
+set statusline=\ %1*\ %{g:currentmode[mode()]}%*\ \ 
+set statusline+=\ %2*\ %F\ %*\ \ \ 
 
 
-" Functionality extensions
-    Plug 'w0rp/ale' "asynchronous linting (thanks neovim)
-    let g:ale_sign_column_always=1
-    let g:ale_sign_error = '>>'
-    let g:ale_sign_warning = '-|'
-    let g:ale_linters = {
-          \'javascript': ['eslint'],
-          \'javascript.jsx': ['eslint']
-          \}
+set statusline+=%2*\ [%l/%L]\ %*\ \ 
 
-    Plug 'godlygeek/tabular' "line stuff up
+hi User1 ctermbg=blue ctermfg=white
+hi User2 ctermfg=white
 
-    " "kill buffer without killing window using :BD
-    Plug 'qpkorr/vim-bufkill' 
-
-    Plug 'eapache/auto-pairs' "auto-close pairs
-
-    Plug 'tpope/vim-commentary' "quick commenting
-
-
-    " "snippets
-    Plug 'MarcWeber/vim-addon-mw-utils'
-    Plug 'tomtom/tlib_vim'
-    Plug 'garbas/vim-snipmate'
-    Plug 'honza/vim-snippets'
-
-
-    " Plug 'JamshedVesuna/vim-markdown-preview'
-
-    Plug 'scrooloose/nerdtree'
-    map <C-n> :NERDTreeToggle<CR>
-
-    Plug 'ryanoasis/vim-devicons'
-    let g:WebDevIconsUnicodeDecorateFolderNodes = 1
-    let g:DevIconsEnableFoldersOpenClose = 1
-
-    Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
-
-    " Not worth the performance hit
-    " Plug 'mattn/emmet-vim'
-    " let g:user_emmet_leader_key='<C-m>'
-    " let g:user_emmet_settings = {
-    "   \  'javascript.jsx' : {
-    "     \      'extends' : 'jsx',
-    "     \  },
-    "   \}
-
-    Plug 'prettier/vim-prettier', { 'do': 'npm install' }
-    let g:prettier#autoformat = 0 " performance suffers without this
-    let g:prettier#exec_cmd_async = 1
-    nnoremap <leader>p :PrettierAsync<cr>
-
-call plug#end()
-
-" nnoremap <C-]> :cprevious<cr>
-" nnoremap <C-[> :cnext<cr>
+hi BufTabLineCurrent ctermfg=40 ctermbg=237
