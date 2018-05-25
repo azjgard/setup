@@ -57,9 +57,7 @@ if [ -n "$force_color_prompt" ]; then
 fi
 
 if [ "$color_prompt" = yes ]; then
-    PS1="\[\e[32;40m\]\u\[\e[m\][\[\e[34m\]\A\[\e[m\]]\[\e[30m\]-\[\e[m\]\[\e[31m\]\w\[\e[m\]: "
-    # original prompt below
-    #PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
 else
     PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
 fi
@@ -118,36 +116,39 @@ if ! shopt -oq posix; then
   fi
 fi
 
-LS_COLORS='*.html=32:*.js=93:*.css=91:*.json=33:di=1;4:*.jpg=93:*.png=91:*.odt=34:*.md=36:*.php=34:*.docx=34:*.tar=94:*.gz=94:*.mp3=96:*.mp4=96:*.sql=94:*.zip=94:*.cpp=94:*.h=95:*.txt=97:*.o=90:*.jade=32'
-export LS_COLORS
+PS1="[\[\033[32m\]\w]\[\033[0m\]\n\[\033[1;36m\]\u\[\033[1;33m\] -> \[\033[0m\]"
 
-alias ls='ls --color=auto --sort=extension --group-directories-first'
-alias lsc='clear; ls -1'
-alias sv='source ~/.bashrc'
-alias ev='vi ~/.bashrc'
+LS_COLORS=$LS_COLORS:'ow=1;34:'; 
+export LS_COLORS;
 
-alias vscode='~/VSCode-linux-x64/code &'
+export PATH=~/bin:$PATH
 
-alias treenode='tree -I "node_modules"'
-
-# git
-function gitCommit() {
+function g() {
+  git add .
   git commit -m "$1"
-  git status
-}
-function gitAdd() {
-  git add "$1"
-  git status
-}
-function gitReset() {
-  git reset
-  git status
+  git push -u origin master
 }
 
-alias gs='git status'
-alias gl='git log'
-alias gc='gitCommit'
-alias ga='gitAdd'
-alias gr='gitReset'
+function ssh-keygen-j() {
+  ssh-keygen -t rsa -b 4096 -C "gard.jordin@gmail.com"
+}
 
-PATH=$PATH:~/bin/TEE-CLC-14.118.0/
+function m() {
+  mysql -u root -ppassword -e "$1";
+}
+
+function mkwordpress() {
+  cd /var/www/html;
+  mkdir "$1";
+  cd "$1";
+  wp core download;
+  wp config create --dbname="$1" --dbuser=root --dbpass=password;
+  mysql -u root -ppassword -e 'create schema '"$1";
+  wp core install --url=localhost/"$1" --title="$1" --admin_user=admin --admin_email=gard.jordin@gmail.com --admin_password=password;
+}
+
+function rmwordpress() {
+  cd /var/www/html;
+  rm -rf "$1";
+  mysql -u root -ppassword -e 'drop schema '"$1";
+}

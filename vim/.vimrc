@@ -14,6 +14,7 @@ let g:AutoPairsMultilineClose = 0
 " let g:prettier#autoformat = 0
 " autocmd BufWritePre *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.json,*.graphql,*.md,*.vue PrettierAsync
 
+Plug 'plasticboy/vim-markdown'
 
 " Syntax
 Plug 'pangloss/vim-javascript'
@@ -93,6 +94,13 @@ imap <leader>; <esc>A;<esc>
 nnoremap <leader>; <esc>A;<esc>
 
 nnoremap <leader>= :Tabularize /=<cr>
+nnoremap <leader>{ :Tabularize /{<cr>
+nnoremap <leader>} :Tabularize /}<cr>
+nnoremap <leader>= :Tabularize /=<cr>
+
+" For WSL copying and pasting with Ctrl + C/V
+vmap <C-c> y:new ~/.vimbuffer<CR>VGp:x<CR> \| :!cat ~/.vimbuffer \| clip.exe <CR><CR>
+map <C-v> :r ~/.vimbuffer<CR>
 
 let g:currentmode={
       \ 'n'  : 'Normal ',
