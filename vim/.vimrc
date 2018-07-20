@@ -4,7 +4,7 @@ call plug#begin('~/.local/share/nvim/plugged')
 Plug 'prettier/vim-prettier', { 'do': 'npm install' }
 Plug 'tpope/vim-commentary'
 Plug 'jiangmiao/auto-pairs'
-Plug 'w0rp/ale'
+" Plug 'w0rp/ale'
 Plug 'MarcWeber/vim-addon-mw-utils'
 Plug 'tomtom/tlib_vim'
 Plug 'garbas/vim-snipmate'
@@ -13,11 +13,32 @@ Plug 'godlygeek/tabular'
 let g:AutoPairsMultilineClose = 0
 " let g:prettier#autoformat = 0
 " autocmd BufWritePre *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.json,*.graphql,*.md,*.vue PrettierAsync
+" Plug 'mattn/emmet-vim'
 
+  " let g:ale_fixers = {
+  " \   'javascript': [
+  " \       'prettier-eslint',
+  " \   ],
+  " \}
+
+Plug 'heavenshell/vim-jsdoc'
+let g:jsdoc_allow_input_prompt=1
+let g:jsdoc_input_description=1
+
+let g:prettier#autoformat = 0
+autocmd BufWritePre *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.json,*.graphql,*.md,*.vue PrettierAsync
 
 " Syntax
 Plug 'pangloss/vim-javascript'
+Plug 'mxw/vim-jsx'
 Plug 'digitaltoad/vim-pug'
+
+" let g:user_emmet_leader_key='<Tab>'
+" let g:user_emmet_settings = {
+"   \  'javascript.jsx' : {
+"     \      'extends' : 'jsx',
+"     \  },
+"   \}
 
 " File Navigation / Management
 Plug 'scrooloose/nerdtree'
@@ -68,6 +89,13 @@ hi ColorColumn ctermbg=gray
 
 let mapleader=","
 
+" Call me ghetto emmett
+nnoremap <leader>t <esc>mt?<.*><cr>yf>`tpF<a/<esc><esc><esc>:nohlsearch<cr>A
+
+nnoremap <C-]> :cnext<cr>
+nnoremap <C-[> :cprev<cr>
+nnoremap <leader>g :vimgrep ' 
+
 nmap <esc> :nohlsearch<cr>
 
 nnoremap <C-p> :FuzzyOpen<CR>
@@ -75,6 +103,7 @@ nnoremap gf :vertical wincmd f<CR>
 
 nnoremap <C-s> :w<cr>
 nnoremap <leader>s :source ~/.vimrc<cr>
+nnoremap <leader>e :e ~/.vimrc<cr>
 
 nnoremap <leader>pc :PlugClean<cr>
 nnoremap <leader>pi :PlugInstall<cr>
@@ -93,6 +122,9 @@ imap <leader>; <esc>A;<esc>
 nnoremap <leader>; <esc>A;<esc>
 
 nnoremap <leader>= :Tabularize /=<cr>
+nnoremap <leader>, :Tabularize /,<cr>
+
+nnoremap <leader>j :JsDoc<cr>
 
 let g:currentmode={
       \ 'n'  : 'Normal ',
@@ -118,11 +150,11 @@ let g:currentmode={
 
 set statusline=\ %1*\ %{g:currentmode[mode()]}%*\ \ 
 set statusline+=\ %2*\ %F\ %*\ \ \ 
-
-
 set statusline+=%2*\ [%l/%L]\ %*\ \ 
 
 hi User1 ctermbg=blue ctermfg=white
 hi User2 ctermfg=white
 
 hi BufTabLineCurrent ctermfg=40 ctermbg=237
+
+let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|git'
