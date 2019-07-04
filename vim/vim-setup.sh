@@ -1,10 +1,10 @@
 #!/bin/bash
 
-if [ $(id -u) = 0 ]; then
-  echo "This script's success is dependent on it not being run as root."
-  echo "Please try again."
-  exit 1;
-fi
+# if [ $(id -u) = 0 ]; then
+  # echo "This script's success is dependent on it not being run as root."
+  # echo "Please try again."
+  # exit 1;
+# fi
 
 sudo apt-get install software-properties-common -y
 sudo add-apt-repository ppa:neovim-ppa/stable -y
